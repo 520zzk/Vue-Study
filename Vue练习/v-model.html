@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue库/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <span>
+            {{a}}<br/>
+        </span>
+        <input type="text" v-model="a">
+    </div>
+    <script>
+        var a={a:1,b:3,c:5};
+    var app=new Vue({
+        el:"#app",
+        data:{
+            a:"dddddafdafdf"
+        }
+    });
+    </script>
+</body>
+</html>

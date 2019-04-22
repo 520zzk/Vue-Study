@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>简易计算器computed</title>
+    <link rel="stylesheet" href="">
+  <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+         <div>
+            <h1>简易计算器computed</h1>
+            <input type="number" name="" v-model="myData.a">
+            <select name="" v-model="myData.op">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+            </select>
+            <input type="number" name="" v-model="myData.b">
+            <p>计算结果{{numComputed}}</p>
+        </div>
+    </div>
+</body>
+<script>
+var myData = {
+    a:0,
+    b:0,
+    op:'+'
+}
+var app = new Vue({
+    el:"#app",
+    data:{
+        myData:myData
+    },
+    computed:{
+        numComputed:function(){
+           //      switch (this.myData.op){
+           //      case "+":{
+           //          return = Number(this.myData.a )+ Number(this.myData.b );
+           //          break;
+           //      }case "-":{
+           //          return =  Number(this.myData.a )- Number(this.myData.b );
+           //          break;
+           //      }case "*":{
+           //          return =  Number(this.myData.a )* Number(this.myData.b );
+           //          break;
+           //      }case "/":{
+           //          return =  Number(this.myData.a )/Number(this.myData.b );
+           //          break;
+           //      }
+           // }
+           //
+
+          return eval(this.myData.a + this.myData.op + this.myData.b)
+           //eval() 函数可计算某个字符串，并执行其中的的 JavaScript 代码。
+        }
+    }
+});
+</script>
+</html>

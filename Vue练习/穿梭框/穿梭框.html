@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title></title>
+		<style>
+			
+			.transfer {
+				line-height: 1.5;
+				position: relative;
+			}
+			.transfer-list {
+				display: inline-block;
+				width: 280px;
+				height: 210px;
+				font-size: 12px;
+				vertical-align: middle;
+				position: relative;
+				padding-top: 35px;
+			}
+			.transfer-header {
+				box-sizing: border-box;
+				padding: 8px 16px;
+				background: #f9fafc;
+				color: #495060;
+				border: 1px solid #dddee1;
+				border-bottom: 1px solid #e9eaec;
+				border-radius: 6px 6px 0 0;
+				overflow: hidden;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+			}
+			.transfer-header-title {
+				padding-left: 4px;
+			}
+			.transfer-header-count {
+				float: right;
+				margin-right: 4px;
+			}
+			.transfer-list-body {
+			    height: 100%;
+			    border: 1px solid #dddee1;
+			    border-top: none;
+			    border-radius: 0 0 6px 6px;
+			    position: relative;
+			    overflow: hidden;
+			}
+			.transfer-list-content {
+			    height: 100%;
+			    padding: 4px 0;
+			    overflow: auto;
+			}
+			.transfer-list-content-item {
+			    margin: 0;
+			    line-height: normal;
+			    padding: 7px 16px;
+			    clear: both;
+			    color: #495060;
+			    white-space: nowrap;
+			    list-style: none;
+			    cursor: pointer;
+			    transition: background .2s ease-in-out;
+			    white-space: nowrap;
+			   	overflow: hidden;
+    			text-overflow: ellipsis;
+			}
+			.transfer-operation {
+			    display: inline-block;
+			    overflow: hidden;
+			    margin: 0 16px;
+			    vertical-align: middle;
+			}
+		</style>
+		<script src="../../vue库/vue.js"></script>
+		<script src="./js/list.js"></script>
+	</head>
+
+	<body>
+		<div class="transfer" id="app">
+			<transfer-list title="源列表" :data="list.originData" :state="originDis"></transfer-list>
+
+			<div class="transfer-operation">
+				<p><input type="button" value="<"  @click="targetToorigin" :disabled="targetDis.val"/></p>
+				<p><input type="button" value=">"  @click="originTotarget" :disabled="originDis.val"/></p>
+			</div>
+
+			<transfer-list title="目标列表" :data="list.targetData" :state="targetDis" ></transfer-list>
+	    </div>
+		<script>
+			Vue.component("transfer-list",{
+				props:{
+					title:{
+						type : String,
+						required:true
+					},
+					data:{
+						type:Array,
+						default:[]
+					},
+					state:{
+						type : Object,
+						required : true
+					}
+				},
+				template:`
+			<div class="transfer-list" @click="isCheckedAll(state)">
+				<div class="transfer-header">
+					<input type="checkbox" name="" @click="checkedAll(data,$event)" :checked="checkAll">
+					<span class="transfer-header-title">
+						{{title}}
+					</span>
+					<span class="transfer-header-count">
+						{{BtnChecked}}/{{data.length}}																	<!--选中的比例-->
+					</span>
+				</div>
+
+				<div class="transfer-list-body">
+					<ul class="transfer-list-content">
+						<li class="transfer-list-content-item" v-for="item in data">
+							<input type="checkbox" name="" v-model="item.checked">				<!--确认选中-->
+							<span>{{item.title}}</span>											<!--title内容-->
+						</li>	
+					</ul>
+				</div>
+			</div>
+			
+				`,
+				computed:{
+					BtnChecked(){
+						return this.data.filter( item =>{
+							return item.checked == true ? item : null ;
+						} ).length
+					},
+					checkAll(){
+						return this.data.every(item=>item.checked);
+					}
+				},
+				methods:{
+					checkedAll(data,ev){
+						data.map(item=>item.checked=ev.target.checked)
+					},
+					isCheckedAll(obj){
+						let {data} = this;
+						setTimeout(() => {
+							obj.val = data.every(item=>!item.checked);	//引用风险
+						},200);
+						console.log(obj);
+					}
+				}
+			})
+
+			var app = new Vue({
+				el:"#app",
+				data:{
+					list:{...list},
+					targetDis:{
+						val:false
+					},
+					originDis:{
+						val:false
+					}
+				},
+				// watch:{
+				// 	list:{
+				// 		handler(newVal,oldVal){
+				// 			let {originData,targetData}=newVal;
+
+				// 			this.targetDis=targetData.every(item=>!item.checked);
+				// 			this.originDis=originData.every(item=>!item.checked);
+				// 		},
+				// 		deep : true
+				// 	}
+				// },
+				methods:{
+					filterData(obj1,obj2){
+						let tar = obj1.filter(item => item.checked).map(item=>{
+							return {
+								...item,
+								checked :false
+								}
+						})
+						obj2.push(...tar);
+						return  obj1.filter(item => !item.checked)
+					},
+					// disabledBtn(arr){
+					// 	return	arr.filter(item=>{
+					// 		return item.chekced==true ? item : null;
+					// 	}).length
+					// },
+					targetToorigin(){
+						this.list.targetData=this.filterData(this.list.targetData,this.list.originData);
+						
+					},
+					originTotarget(){
+						this.list.originData=this.filterData(this.list.originData,this.list.targetData)
+					},
+					
+				}
+			})
+		</script>
+	</body>
+</html>

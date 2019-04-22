@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义组件上使用v-model </title>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>总数    {{total}}</div>
+        <my-input v-model="total"></my-input>
+    </div>
+</body>
+<script>
+
+Vue.component("my-input",{
+    template:`<button @click="add">点击添加</button>`,
+    data:function(){
+        return {
+            counter:0
+        }
+    },
+    methods:{
+        add(){ 
+            this.counter++;
+            this.$emit('input',this.counter);
+        }
+    }
+});
+
+var app = new Vue({
+    el:"#app",
+    data:{
+        total:0
+    },
+    methods:{
+
+    }
+});
+</script>
+</html>

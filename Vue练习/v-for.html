@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue库/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p v-for="(index,key,x) in user">{{key}}--{{index}} --{{x}}</p>
+    </div>
+    <script>
+        var app=new Vue({
+            el:"#app",
+            data:{
+                user:{
+                    name:"perter",
+                    age:22,
+                    gender:'男'
+                }
+            }
+        });
+
+
+
+
+        var obj={a:1,b:2,d:3}; 
+        console.log(Object.keys(obj));
+    </script>
+</body>
+</html>

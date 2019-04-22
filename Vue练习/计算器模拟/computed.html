@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p><input type="text" :value="name()" name=""></p>
+    <p><input type="text" :value="getName" name=""></p>
+    <p><input type="number" v-model="myData.age" name=""></p>
+</div>
+</body>
+<script>
+    var myData={
+        firstName:"张",
+        lastName:"三",
+        age:22
+    }
+    var app = new Vue({
+        el:"#app",
+        data:{
+           myData:myData
+        },
+        methods:{
+            name:function(){
+                console.log('methods');
+                return this.myData.firstName + this.myData.lastName;
+            }
+        },
+        computed:{
+            getName:function(){
+                console.log('computed');
+                return this.myData.firstName + this.myData.lastName;
+            }
+        }
+    });
+</script>
+</html>

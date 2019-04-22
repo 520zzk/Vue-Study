@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>三级联动组件化</title>
+    <script src="./js/city三级.js"></script>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <my-city :city="cities"></my-city>
+    </div>
+</body>
+
+<script>
+Vue.component("my-city",{
+    props:{
+        city:{
+            type:Object,
+            default:{}
+        }
+    },
+    data(){
+        return {
+            myCity:this.city,
+            myCityChildren:{},
+            myArea:[]
+        }
+    },
+    template:`
+    <div>
+        <select @change="cityChildren">
+            <option>请选择</option>
+            <option v-for="(city,key_city) in myCity" >{{key_city}}</option>
+        </select>
+        <select @change="area" ref="shi">
+            <option>请选择</option>
+            <option v-for="(shi,key_shi) in myCityChildren">{{key_shi}}</option>
+        </select>
+        <select>
+            <option>请选择</option>
+            <option v-for="item in  myArea">{{item}}</option>
+        </select>   
+    </div>
+    `,
+    methods:{
+        cityChildren(ev){
+            // this.myCityChildren = null;
+            this.myArea = null;
+            this.myCityChildren = this.myCity[ev.target.value];
+
+            this.$refs['shi'].value='请选择';
+        },
+        area(ev){
+            this.myArea = this.myCityChildren[ev.target.value];
+        }
+    }
+})
+var app = new Vue({
+    el:"#app",
+    data:{
+        cities
+    }
+})
+</script>
+</html>

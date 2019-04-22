@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <style>
+        .box {
+            margin: 100px auto 0;
+            width: 80%;
+        }
+        .clear:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        .rate {
+            margin: 0;
+            padding: 0;
+            display: inline-block;
+            list-style: none;
+        }
+        .rate .item {
+            float: left;
+            padding: 0 5px;
+            font-size: 30px;
+            cursor: pointer;
+            transition: .2s all;
+            color: #ccc;
+        }
+        .rate .item.checked {
+            color: rgb(247, 186, 42);
+        }
+        .rate .item:hover {
+            transform: scale(1.3);
+        }
+        .rate .text {
+            float: left;
+            padding-left: 15px;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+<!-- 
+        <ul class="rate clear">
+            <li class="item checked">
+                <i class="fas fa-star"></i>
+            </li>
+            <li class="item checked">
+                <i class="fas fa-star"></i>
+            </li>
+            <li class="item">
+                <i class="far fa-star"></i>
+            </li>
+            <li class="item">
+                <i class="far fa-star"></i>
+            </li>
+            <li class="item">
+                <i class="far fa-star"></i>
+            </li>
+            <li class="text">{{showText}}</li>
+        </ul> -->
+
+        <ul class="rate clear">
+            <li class="item" v-for="i in liNum"
+            :class="{checked: i<=newNum }"
+                @mouseover="over(i)"
+                @mouseout= "out"
+                @click="click(i)"
+            >
+                 <i class="fa-star" :class="i<=newNum ? 'fas' : 'far' "></i>
+            </li>
+        
+            <li class="text">{{assess[newNum-1]}}</li>
+        </ul>
+
+
+    </div>
+<script src="../js/vue.js"></script>
+<script>
+new Vue({
+    el:'.box',
+    data:{
+        liNum:6,    //总数
+        newNum:3,    //移上去的新值
+        oldNum:4,       //保留后的旧值
+        assess:['很差','差','一般','良好','很好','非常好']
+    },
+    methods:{
+        over(i){
+            this.newNum  = i;
+        },
+        out(){
+            this.newNum = this.oldNum
+        },
+        click(i){
+            this.oldNum = i
+        }
+    }
+})
+
+</script>
+</body>
+</html>

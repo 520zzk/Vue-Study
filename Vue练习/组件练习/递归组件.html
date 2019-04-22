@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+    <!-- <script src="./js/city.js"></script> -->
+    <style>
+        ul,li,span,div{
+            margin:0px;
+            padding:0px;
+            list-style:none;
+           
+        }
+    </style>
+</head>
+<body>
+ <div id="app">
+    <my-city :List="list"></my-city>
+ </div> 
+</body>
+<script>
+ var list = [{
+        title: "目录",
+        chidren: [{
+            title: "我的音乐",
+            chidren: [{
+                title: "周杰伦",
+                chidren: [{
+                    title: "发如雪"
+                }]
+            }, {
+                title: "王杰",
+                chidren: [{
+                    title: "一场游戏一场梦"
+                }]
+            }]
+        }, {
+            title: "我的照片"
+        }]
+    },{
+        title: "圣骑士",
+        chidren: [{
+            title: "转职",
+            chidren: [{
+                title: "神坛",
+                chidren: [{
+                    title: "奶爸"
+                }]
+            }, {
+                title: "下水道",
+                chidren: [{
+                    title: "南拳"
+                }]
+            }]
+        }, {
+            title: "未转职"
+        }]
+    }];
+
+Vue.component("my-city-list",{
+    props:{
+        cList:{
+            type:Array,
+            default:[]
+        },
+        Num:{
+            type:Number,
+            default:0
+        }
+    },
+    computed:{
+        cishu:function(){
+            var n = this.Num;
+            return n+1;
+        },
+        classNum:function(){
+            return "padding-left:"+ this.cishu * 30 + "px";
+        },
+        show:function(){
+            this.cLise.chidren && show ? true : false;
+        }
+    },
+    data(){
+        return {
+            clist:this.cList,
+            show:false
+        }
+    },
+    methods:{
+        clickShow(){
+            this.show = !this.show;
+        }
+    },    
+    template:`<ul >
+                <li v-for="item in clist"  :style = "classNum">
+                    <span @click="clickShow">{{item.title}}</span>
+
+                    <my-city-list v-if="show" :cList="item.chidren" :Num="cishu">
+                    </my-city-list>    
+                </li>
+              </ul>`,
+});
+
+Vue.component("my-city",{
+    props:{
+        List:{
+            type:Array,
+            defalut:[]
+        }
+    },
+    data(){
+        return {
+            myList:this.List
+        };
+    },
+    template:`<div>
+               <my-city-list :cList="myList"></my-city-list>
+            </div>`,
+});
+
+var app = new Vue({
+    el:"#app",
+    data:{
+        list
+    }
+});
+</script>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+
+    <div class="container" id="app">
+        <!--左侧边栏-->
+        <div class="aside">
+            <h1 class="header">
+                <a href="javascript:;">{{appName}}</a>
+            </h1>
+            <ul class="menu-list">
+                <li @click="fileCut('all','全部')" :class="{cur :filecur=='all'}">
+                    <a href="javascript:;">
+                        <i class="icon icon-all"></i>
+                        <span>全部</span>
+                    </a>
+                </li>
+                <li  @click="fileCut('text','文档')" :class="{cur :filecur=='text'}">
+                    <a href="javascript:;">
+                        <i class="icon icon-doc"></i>
+                        <span>文档</span>
+                    </a>
+                </li>
+                <li  @click="fileCut('pic','图片')" :class="{cur :filecur=='pic'}">
+                    <a href="javascript:;">
+                        <i class="icon icon-pic"></i>
+                        <span>图片</span>
+                    </a>
+                </li>
+                <li  @click="fileCut('video','视频')" :class="{cur :filecur=='video'}">
+                    <a href="javascript:;">
+                        <i class="icon icon-video"></i>
+                        <span>视频</span>
+                    </a>
+                </li>
+                <li  @click="fileCut('music','音乐')" :class="{cur :filecur=='music'}">
+                    <a href="javascript:;">
+                        <i class="icon icon-music"></i>
+                        <span>音乐</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--右侧主区域内容-->
+        <div class="main">
+
+            <!--顶部工具栏-->
+            <div class="toolbar">
+
+                <div class="layout clearfix">
+
+                    <div class="action-wrap action-wrap-upload">
+                        <div class="action-item">
+                            <i class="icon icon-upload-s"></i>
+                            <span class="act-txt">上传</span>
+                        </div>
+                    </div>
+
+                    <div class="action-wrap">
+                        <div class="action-item">
+                            <i class="icon icon-add"></i>
+                            <span class="act-txt">新建</span>
+                        </div>
+                    </div>
+
+                    <div class="action-wrap">
+                        <div class="action-item">
+                            <i class="icon icon-trash"></i>
+                            <span class="act-txt">删除</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--主体内容-->
+            <div class="main-body">
+
+                <div class="hd">
+
+                    <div class="right clearfix">
+
+                        <div class="action-wrap">
+                            <div class="action-item" @click="fileView('list')"
+                            :class="{act :filemodel=='list'}">
+                                <i class="icon icon-mod-list"></i>
+                                <span class="act-txt">列表</span>
+                            </div>
+                        </div>
+
+                        <div class="action-wrap">
+                            <div class="action-item " 
+                            :class="{act : filemodel=='thum'}"
+                            @click="fileView('thum')">
+                                <i class="icon icon-mode-thumb"></i>
+                                <span class="act-txt">缩略图</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <ul class="breadcrumb clearfix">
+                        <li class="item all">
+                            <a href="javascript:void(0)">全部 </a>
+                        </li>
+                        <li class="item all">
+                            <i class="icon icon-bread-next"></i>
+                            <a href="javascript:void(0)">miaov资料</a>
+                        </li>
+                        <li class="item cur">
+                            <i class="icon icon-bread-next"></i>
+                            <a href="javascript:void(0)" title="视频">{{NowType}}{{draw}}</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="list-wrap">
+
+
+                    <!--列表头部-->
+                    <div class="list-header clearfix">
+
+                        <div class="col checkbox">
+                            <!--icon-checkbox,icon-checkbox-hover,icon-checkbox-cur-->
+                            <i class="icon icon-checkbox"></i>
+                        </div>
+
+                        <div class="col col-border name" style="display: block;">
+                            <strong>名称</strong>
+                        </div>
+
+                        <div class="col col-border info" style="display: none;">
+                            已选择 ? 项
+                        </div>
+
+                    </div>
+                    <!--列表头部end-->
+
+                    <!--正文，缩略图-->
+                    <div class="list-item-wrap list-item-wrap-thumb" v-show="filemodel=='thum'"
+                    v-draw.boundary>
+
+                        <ul class="list-item clearfix">
+                            <li class="item" v-for="item in filethis">
+                                <div class="inner">
+                                    <i class="icon-wrapper">
+                                        <i class="icon icon-file-l"></i>
+                                    </i>
+                                    <span title="a4" class="txt">{{item.fileName}}</span>
+                                </div>
+                                <i class="icon checkbox icon-checkbox"></i>
+                            </li>
+                            
+                        </ul>
+
+                        <ul class="figure-item clearfix">
+                            <li class="figure-list-item" v-for="item in fileother">
+                                <div class="figure-list-item-inner">
+                                    <i class="icon checkbox icon-checkbox"></i>
+                                    <div class="figure-list-item-pic">
+                                        <div class="img-wrapper">
+                                            <i class="icon icon-l icon-zip-l"></i>
+                                        </div>
+                                    </div>
+                                    <div class="figure-list-item-txt">
+                                        <p class="tit">
+                                            {{item.fileName}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!--列表模式-->
+                    <div class="list-item-wrap list-item-wrap-list clearfix"
+                    v-show="filemodel=='list'">
+                        <div class="row clearfix" v-for='item in filethis'>
+                            <div class="col checkbox-wrap">
+                                <!--icon-checkbox,icon-checkbox-hover,icon-checkbox-cur-->
+                                <i class="icon checkbox icon-checkbox-cur"></i>
+                            </div>
+
+                            <div class="col col-border name">{{item.fileName}}</div>
+                        </div>
+                        <div class="row clearfix" v-for='item in fileother'>
+                            <div class="col checkbox-wrap">
+                                <!--icon-checkbox,icon-checkbox-hover,icon-checkbox-cur-->
+                                <i class="icon checkbox icon-checkbox-cur"></i>
+                            </div>
+
+                            <div class="col col-border name">{{item.fileName}}</div>
+                        </div>
+                        <!--选中：cur-->
+                       <!-- <div class="row cur clearfix">
+                            <div class="col checkbox-wrap">
+                               icon-checkbox,icon-checkbox-hover,icon-checkbox-cur,icon-checkbox-cur2(反色)
+                                <i class="icon checkbox icon-checkbox-cur2"></i>
+                            </div>
+
+                            <div class="col col-border name">修改时间</div>
+                        </div>-->
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            
+            <!--画框-->
+            <div class="draw-selector" :style="draw" ></div>
+        </div>
+    </div>
+
+
+    <script src="js/vue.js"></script>
+    <script src="js/index.js"></script>
+
+</body>
+</html>

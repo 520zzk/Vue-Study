@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue库/vue.js"></script>
+</head>
+<body>
+    <div id="zzk">
+        <button  @click="zzk($event,5)" >点击测试</button>
+        <button  @click="zzz" >点击测试</button>
+    </div>
+<script>
+var app=new Vue({
+    el:"#zzk",
+    data:{
+
+    },
+    methods:{
+       zzk:(ev,x)=>{
+        console.log(ev);
+        console.log(x);
+        console.log(app);
+       },
+       zzz(ev){
+           console.log(54),
+           console.log(ev);
+           console.log(this);
+       }
+    }
+});
+</script>
+
+</body>
+</html>

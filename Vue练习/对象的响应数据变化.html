@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue库/vue.js"></script>
+</head>
+<body><div id="app">
+<p v-for="book in books">{{book.name    }}</p>
+<p>{{zzk.id}}</p>
+</div>   
+</body>
+
+<script>
+var app= new Vue({
+    el:"#app",
+    data:{
+        books:[{
+            name:"《第一次》"
+        },
+        {
+            name:"《第二次》"
+        }
+    ],
+    zzk:{}
+
+    }
+});
+/*这样子不能跟新视图
+    app.zzk.id=001;
+*/
+
+/*调用Vue的静态方法set
+    语法:
+*/
+</script>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div class="page-top">
+        <div class="page-content">
+            <h2>任务计划列表</h2>
+        </div>
+    </div>
+    <div class="main">
+        <h3 class="big-title">添加任务：</h3>
+        <input 
+            placeholder="例如：吃饭睡觉打豆豆；    提示：+回车即可添加任务" 
+            class="task-input" 
+            type="text"
+            @keydown.13="EnterAdd"      
+            v-model="nowValue"
+        />    <!--回车发送，加改变nowvalue-->
+        <ul class="task-count" v-show="list.length">
+            <li>{{filterNum}}个任务未完成</li>
+            <li class="action">
+                <a :class="{active:hash=='all'}" href="#all">所有任务</a>   <!--通过hash,来做到切换效果-->
+                <a :class="{active:hash=='unfinished'}" href="#unfinished">未完成的任务</a>
+                <a :class="{active:hash=='finished'}" href="#finished">完成的任务</a>
+            </li>
+        </ul>
+        <h3 class="big-title">任务列表：</h3>
+        <div class="tasks">
+            <span class="no-task-tip" v-show="!list.length">还没有添加任何任务</span>
+            <!--v-show用来判断显示内容-->
+            <ul class="todo-list">
+                <li :class="{completed:item.isChecked,editing:item==editing}" 
+                v-for="item in filterHash">
+                    <!--conmpleted用来表示选中是的文字效果-->
+                    <div class="view">
+                        <input type="checkbox" class="toggle" 
+                        v-model="item.isChecked" >
+                        <label @dblclick="dbAdd(item)">{{item.title}}</label>
+                        <button class="destroy" @click="delData(item)"></button>
+                        <!--用来删除-->
+                    </div>
+                    <input type="text" class="edit" v-model="item.title" 
+                    v-foucs="editing===item"
+                    @blur="blurAdd"
+                    @keydown.13="blurAdd"
+                    @keydown.esc="cancel(item)"
+                    >
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        var list = [
+            {
+                title:'吃饭睡觉打豆豆',
+                isChecked:false
+            },
+            {
+                title:"看电影",
+                isChecked:true
+            }
+        ];
+        var fil={
+                        all:function(list){
+                            return list
+                        },
+                        unfinished:function(list){
+                           return list.filter((item)=>{return !item.isChecked})
+                        },
+                        finished:function(list){
+                            return list.filter((item)=>{return item.isChecked})
+                        }
+                };
+        var app = new Vue({
+            el:".main",
+            data:{
+                list,           //引用关系，生死相连
+                nowValue:"",    //添加中转
+                editing:"",      //记录正在编辑的数据 用于显示/修改
+                cancelOld:"",      //记录开始编辑前的信息，便以还原
+                hash:"all"
+            },
+            methods:{
+                EnterAdd(ev){  //添加一个任务
+                    if(ev.target.value!=''){
+                        list.push({
+                        title:this.nowValue,
+                        isChecked:false 
+                        });
+                    } 
+                   this.nowValue="";
+                },
+                delData(item){  //删除任务
+                    var index = this.list.indexOf(item);
+                    this.list.splice(index,1);
+                },
+                dbAdd(item){    //双击编辑任务
+                this.cancelOld=item.title;   //编辑前的记录
+                this.editing=item;
+                },
+                blurAdd(ev){      //失焦还原
+                
+                    this.editing=""
+                },
+                cancel(item){       //esc取消编辑
+                    item.title=this.cancelOld;
+                    this.editing="";
+                }
+            },
+            directives:{        //自定义指令
+                "foucs":{
+                    update(el,bind){    //钩子函数
+                        if(bind.value){
+                            el.focus();
+                        }
+                    }
+                }
+            },
+            computed:{
+                filterNum:function(){
+                 return this.list.filter((item)=>{return !item.isChecked}).length;
+                },
+                filterHash(){
+                return fil[this.hash] ? fil[this.hash](list):list;
+                }
+            }
+        });
+    function hashCheck(){
+        var hash = window.location.hash.slice(1);//substring(1)也行
+        app.hash=hash;
+    }
+    hashCheck();
+    window.addEventListener("hashchange",hashCheck);
+    </script>
+</body>
+</html>

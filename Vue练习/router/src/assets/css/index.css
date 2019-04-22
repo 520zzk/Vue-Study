@@ -1,0 +1,47 @@
+*{
+    padding:0px;
+    margin:0px;
+    list-style:none;
+}
+.nav-box{
+    height:60px;
+    background:#125483;
+    line-height:60px;
+    width:100%;
+}
+.nav-box-ul{
+    width:960px;
+    height:60px;
+    margin:0 auto;
+    list-style:none;
+   
+}
+
+.nav-box-ul > li{
+    width:100px;
+    height:40px;
+    line-height: 40px;
+    margin-top:10px;
+    float:left;
+    margin-left:10px;
+    border-radius:5px;
+    background: #fff;
+}
+.nav-box-ul > .is-active{
+    background:yellow;
+    color:#000;
+}
+.nav-box-ul > .aboutActive{
+    background:pink;
+    color:blueviolet;
+}
+
+.nav-box-ul>li>a{
+    display: inline-block;
+    margin-top:10px;
+   line-height:30px;
+    height:30px;
+    width:80px;
+    text-decoration:none;
+    color:pink;
+}

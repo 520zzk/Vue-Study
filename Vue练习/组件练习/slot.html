@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Solt</title>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <one-solt>
+                <template v-slot:todo="slotProps" > <!--slotProps取名随意-->
+                <!--作用域插槽的内部工作原理是将你的插槽内容包括在一个传入单个参数的函数里：
+                            function (slotProps) {
+                            // 插槽内容
+                            }
+                            这意味着 v-slot 的值实际上可以是任何能够作为函数定义中的参数的 JavaScript 表达式。-->
+                         {{slotProps}}  <br/> <!--传过来的所有数据 { "user": { "lastName": "Zhang", "firstName": "yue" }, "test": [ 1, 2, 3, 4 ] }-->
+                        {{slotProps.user.firstName}}
+                      
+                </template> 
+        </one-solt>
+        <br/>
+        <zzk>
+            <!--单个的solt，也就是默认solt-->
+            <div>nihao <span>你好</span> </div>
+            <p>meishi </p>
+        </zzk>
+        <br/>
+        <arr>
+            <template v-slot:one>
+               <div>我是第一个</div> 
+            </template>
+            <template #two>
+                <em>我是第二个</em>
+            </template>
+            <template #three>
+               <b> 我是第三个</b>
+            </template>
+        </arr>
+    </div>
+</body>
+<script>
+    Vue.component("zzk",{
+        template:`<div>
+                     <slot> 我是一个组件</slot>
+                  </div>`
+    });
+    Vue.component("arr",{
+        template:`
+        
+        <ul>
+                <slot name="one"></slot>
+                <slot name="two"></slot>
+                <slot name="three"></slot>
+        </ul>
+       
+        `,
+        mounted:function(){
+            var a = this.$slots.one; //去访问slot one
+     
+        console.log(a);       
+        }
+    });
+    Vue.component("one-solt",{
+        template:`
+        <div>
+                <slot name="todo" :user="user" :test="test">
+                {{ user.lastName }}
+                </slot> 
+        </div>
+       
+         
+        `,
+        data() {
+                return {
+                user:{
+                    lastName:"Zhang",
+                    firstName:"yue"
+                },
+                test:[1,2,3,4]
+                }
+            }
+    }); 
+
+    
+    var app = new Vue({
+        el:"#app",
+        data:{
+
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../vue库/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <template v-if="type==='name'">
+            <label>用户：</label>
+            <input placeholder="输入用户名">
+            <textarea name="" id="" cols="30" rows="10">
+                123213213213
+            </textarea>
+        </template>
+        <template v-else>
+            <label>邮箱：</label>
+            <input placeholder="输入邮箱" value="asdsad">
+            <textarea name="" id="" cols="30" rows="10">
+            </textarea>
+        </template>
+        <button @click="zzz">切换输入类型</button>
+    </div>
+    <script>
+    var app= new Vue({
+        el:'#app',
+        data:{
+            type:'name'
+        },
+        methods:{
+            zzz(){
+                this.type = this.type==='name' ? "mail" :"name" ;
+            }
+        }
+    });
+    </script>
+</body>
+</html>

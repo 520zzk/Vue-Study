@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/ico" href="images/login/fav.jpg" />
+<title>用户登录&nbsp;-&nbsp;EPORTAL&nbsp;|&nbsp;3.0</title>
+<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="css/layui/css/layui.css"/>
+<link href="css/login.css" rel="stylesheet" type="text/css" />
+<!-- <link href="css/animate.css" rel="stylesheet" type="text/css" /> -->
+<script type="text/javascript" src="app/random.js"></script>
+<script type="text/javascript">
+function check(){
+	var selLanguage=document.getElementById("selLanguage");
+	
+	var user= document.getElementById("user");
+	var pass= document.getElementById("pass");
+	var radomcode = document.getElementById("code");
+	var name =  user.value;
+	var names=name.replace(/(^\s*)|(\s*$)/g, "");		
+	if(names==null || names==""){
+		if(selLanguage.innerHTML=='English'){
+			alert("账号为空请正确填写！");
+		}
+		else if(selLanguage.innerHTML=='中文'){
+			alert("Account must not be empty！");
+		}
+		user.focus();
+		return false;
+	}
+	var password = pass.value;
+	var passwords=password.replace(/(^\s*)|(\s*$)/g, "");
+	if(passwords==null ||passwords==""){
+		if(selLanguage.innerHTML=='English'){
+			alert("密码为空请正确填写！");
+		}
+		else if(selLanguage.innerHTML=='中文'){
+			alert("Password can not be empty！");
+		}
+		pass.focus();
+		return false;
+	}
+	var code = radomcode.value;
+	codes=code.replace(/(^\s*)|(\s*$)/g, "");
+	if(codes==null ||codes==""){
+		if(selLanguage.innerHTML=='English'){
+			alert("随机码为空请正确填写！");
+		}
+		else if(selLanguage.innerHTML=='中文'){
+			alert("verify code can not be empty！");
+		}
+		radomcode.focus();
+		return false;
+	}
+	return true;
+}
+
+function change(){
+	var selLanguage = document.getElementById("selLanguage");   
+	if(selLanguage.innerHTML=='English'){
+	 	document.title="User Login";
+	 	document.getElementById("title_text").innerHTML = "User Login";
+	 	selLanguage.innerHTML = "中 文";
+		document.getElementById("logoText").innerHTML = "Welcome To Eportal Managemen";
+		var inputEle   = document.getElementsByTagName("input");
+		inputEle[0].setAttribute("placeholder","User Name");
+		inputEle[1].setAttribute("placeholder","Password");
+	 	inputEle[2].setAttribute("placeholder","Captcha");
+	 	var btnLogin=document.getElementsByTagName("button");
+	 	btnLogin[0].innerHTML="Login";
+	 	var form=document.getElementsByName("loginform");
+	 	document.getElementById("footer").innerHTML = "Guangzhou Hot Software Polytron Technologies Inc © 2017";
+	 	form[0].action="?c=main&a=login&lang=en";
+	 }else{
+		document.title = "用户登录";
+		document.getElementById("title_text").innerHTML = "用户登录";
+	 	selLanguage.innerHTML = "English";
+		document.getElementById("logoText").innerHTML = "欢迎登录Portal后台管理系统";
+		var inputEle   = document.getElementsByTagName("input");
+		inputEle[0].setAttribute("placeholder","用户名");
+		inputEle[1].setAttribute("placeholder","密码");
+	 	inputEle[2].setAttribute("placeholder","验证码");
+	 	var btnLogin=document.getElementsByTagName("button");
+	 	btnLogin[0].innerHTML="登 录";
+	 	var form=document.getElementsByName("loginform");
+	 	document.getElementById("footer").innerHTML = "广州热点软件科技股份有限公司 © 2018";
+ 		form[0].action="?c=main&a=login&lang=zh_CN";
+	}
+}
+
+function load(){
+	loadimage();
+	var lang = navigator.language;//默认浏览器语言
+	if(lang='zh-CN'){
+		document.title = "用户登录";
+		document.getElementById("title_text").innerHTML = "用户登录";
+		document.getElementById("selLanguage").innerHTML = "English";
+		document.getElementById("logoText").innerHTML = "欢迎登录Portal后台管理系统";
+		var inputEle   = document.getElementsByTagName("input");
+		inputEle[0].setAttribute("placeholder","用户名");
+		inputEle[1].setAttribute("placeholder","密码");
+	 	inputEle[2].setAttribute("placeholder","验证码");
+	 	var btnLogin=document.getElementsByTagName("button");
+	 	btnLogin[0].innerHTML="登 录";
+	 	var form=document.getElementsByName("loginform");
+	 	document.getElementById("footer").innerHTML = "广州热点软件科技股份有限公司 © 2018";
+ 		form[0].action="?c=main&a=login&lang=zh_CN";
+	}else{
+		document.title="Login";
+		document.getElementById("title_text").innerHTML = "User Login";
+		document.getElementById("selLanguage").innerHTML = "中 文";
+		document.getElementById("logoText").innerHTML = "Welcome To Eportal Managemen";
+		var inputEle   = document.getElementsByTagName("input");
+		inputEle[0].setAttribute("placeholder","User Name");
+		inputEle[1].setAttribute("placeholder","Password");
+	 	inputEle[2].setAttribute("placeholder","Captcha");
+	 	var btnLogin=document.getElementsByTagName("button");
+	 	btnLogin[0].innerHTML="Login";
+	 	var form=document.getElementsByName("loginform");
+	 	document.getElementById("footer").innerHTML = "Guangzhou Hot Software Polytron Technologies Inc © 2017";
+	 	form[0].action="?c=main&a=login&lang=en";
+	}
+	document.getElementById("selLanguage").onclick=function(){
+		change();
+	}
+	// document.getElementsByTagName("form")[0].onmouseenter=function(){
+	// 	document.getElementById("left-hander").setAttribute("class","left_hand transition");
+	// 	document.getElementById("right-hander").setAttribute("class","right_hand transition");
+	// }
+	// document.getElementsByTagName("form")[0].onmouseleave=function(){
+	// 	document.getElementById("left-hander").setAttribute("class","initial_left_hand transition");
+	// 	document.getElementById("right-hander").setAttribute("class","initial_right_hand transition");
+	// }
+	// window.location.href="?c=main&a=loginIndex";
+}
+</script>
+</head>
+<body onLoad="load();">
+<div class="login-container" style="height:100%">
+    <div class="header">
+        <span id="logoText" style="color:#fff;">欢迎登录Portal后台管理系统</span>
+        <a class="pull-right" id="selLanguage" style="line-height: 50px;margin-right: 21px;font-size: 15px;color: #FFF;display: inline-block;width: 50px;">English</a>
+    </div>
+    <div class="container" style="top:50%;margin-top:-300px">
+        <form  action="?c=main&a=login" method="post" name="loginform" onsubmit="return check();" class="content layui-form">
+        <div class="people">
+			<!-- <div class="tou"></div>
+            <div id="left-hander" class="initial_left_hand transition"></div>
+            <div id="right-hander" class="initial_right_hand transition"></div> -->
+        </div>
+            <ul>
+		       <h1 id="title_text" style="position: absolute;top:40px;left:400px;color: #B7883E;font-size:24px;font-family:'Microsoft YaHei 微软雅黑';font-weight: 800;">用户登录</h1>
+              <div class="form-group">
+                  <div class="input-group">
+                      <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                      <input name="user" id="user" type="text" maxlength="15" class="form-control" value="" placeholder='用户名' >
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="input-group">
+                      <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                      <input name="pass" id="pass" type="password" maxlength="15" class="form-control" value="" placeholder="密码" >
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="input-group">
+                      <div class="input-group-addon"><span class="glyphicon glyphicon-check"></span></div>
+                      <input name="code" id="code" class="form-control" placeholder="验证码" maxlength="4">
+                      <div class="input-group-addon" style="padding:0px;background-color: #fff;padding:0 8px;">
+                          <img id="codeimage" onclick="javascript: loadimage();" />
+                      </div>
+                  </div>
+              </div>
+              <div class="font_red"></div>
+              <div class="form-group">
+                  <button type="submit" class="btn btn-block btn-origin" style="background-color:#09c;color:#fff;" name="submit">登  录</button>
+              </div>
+            </ul>
+        </form>
+    </div>
+    <div id="footer" class="footer">广州热点软件科技股份有限公司 © 2018</div>
+</div> -->
+
+</body>
+</html>

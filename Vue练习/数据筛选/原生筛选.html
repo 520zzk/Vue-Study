@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body>
+	<div id="wrap">
+		<section id="section">
+			<nav id="choose">
+				<span>你的选择:</span>
+				<div>
+					
+					<mark v-for="item,index in mark">{{item}}<a href="javascript:;" @click="remove(index)">X</a></mark> 
+				</div>
+			</nav>
+			<ul id="type">
+                <li v-for="item,i in list">
+                  <span>{{item.title}}</span>
+                  <a href="javascript:;" v-for="lista,j in item.data"
+                    @click="add(i,lista,j)"
+                    :class="{active: item.index==j}"
+                  >{{lista}}</a>
+                </li>
+			</ul>
+		</section>
+		<nav class="filter-nav">
+			<span class="nav-color">综合排序</span>
+			<span>销量排序</span>
+			<span>价格低到高</span>
+			<span>价格高到低</span>
+		</nav>
+		<section class="shop-list"></section>
+    </div>
+    <script src="./vue.js"></script>
+	<script>
+	var listData = [
+			{
+				"title": "品牌",
+				"data": [ "苹果","小米","锤子","魅族","华为","三星","OPPO","vivo","乐视"]
+			},
+			{
+				"title": "尺寸",
+				"data": ["4.0-4.5英寸","4.6-4.9英寸","5.0-5.5英寸","6.0英寸以上"]
+			},
+			{
+				"title": "系统",
+				"data": ["android","ios","window phone","无","其他"]
+			},
+			{
+				"title": "网络",
+				"data": ["联通3G","双卡单4G","双卡双4G","联通4G"]
+			}
+        ];
+        
+         listData.forEach(item=>item.index=-1);
+         console.log(listData);
+        var wrap = new Vue({
+            el:"#wrap",
+            data:{      //数据
+                list:listData,
+                mark:{}
+                
+            },
+            methods:{       //方法
+                add(i,value,j){
+                  this.$set(this.mark,i,value);
+                  this.list[i].index=j;
+                },
+                remove(id){
+                 this.$delete(this.mark,id);
+                 this.list[id].index=-1;
+                }
+            }
+        });
+	
+
+	</script>
+</body>
+</html>

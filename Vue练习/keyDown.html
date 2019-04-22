@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- <input type="text" @keydown="down">  -->
+        <input type="text" @keydown.enter="down"> 
+        {{text}}
+    </div>
+    <script src="../vue库/vue.js"></script>
+    <script>
+     var app = new Vue({
+         el:"#app",
+         data:{
+             text:'我是内容'
+         },
+         methods:{
+             down:function(ev){
+                //  if(ev.keyCode==13){
+                //     this.text=ev.target.value;
+                //  }
+                
+                    this.text=ev.target.value;
+              
+             }
+         }
+     });
+    </script>
+</body>
+</html>
