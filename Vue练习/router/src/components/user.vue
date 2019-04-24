@@ -72,7 +72,7 @@ export default {
  methods:{
      getUser(){
          let id = this.$route.params.userId;
-     this.user = this.listData.filter((item)=>{
+        this.user = this.listData.filter((item)=>{
          return item.Id == id;
      })[0];
      }
