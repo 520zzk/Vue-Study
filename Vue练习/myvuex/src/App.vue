@@ -1,22 +1,24 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+      <selects></selects>
+      <increment></increment>
   </div>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import selects from './components/select.vue'
+import increment from "./components/Increment.vue"
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    selects,
+    increment
   }
 }
 </script>
 
-<style lang="less">
+<style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

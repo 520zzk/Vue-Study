@@ -1,4 +1,4 @@
-# testvue
+# myvuex
 
 ## Project setup
 ```
